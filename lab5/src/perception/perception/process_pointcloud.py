@@ -224,12 +224,15 @@ class RealSensePCSubscriber(Node):
     def _on_parameter_update(self, params):
         new_min_z = self.min_z
         new_max_z = self.max_z
+        new_max_y = self.max_y
 
         for param in params:
             if param.name == 'min_z' and param.type_ == Parameter.Type.DOUBLE:
                 new_min_z = float(param.value)
             elif param.name == 'max_z' and param.type_ == Parameter.Type.DOUBLE:
                 new_max_z = float(param.value)
+            elif param.name == 'max_y' and param.type_ == Parameter.Type.DOUBLE:
+                new_max_y = float(param.value)
             elif param.name in ('cube_max_v', 'tape_h_min', 'tape_h_max', 'tape_s_min',
                                 'tape_v_min', 'tape_min_points'):
                 setattr(self, param.name, int(param.value))
@@ -242,6 +245,7 @@ class RealSensePCSubscriber(Node):
 
         self.min_z = new_min_z
         self.max_z = new_max_z
+        self.max_y = new_max_y
         return SetParametersResult(successful=True)
 
 
